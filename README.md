@@ -11,6 +11,10 @@
 
 [![Markdown 编辑器桌面应用](https://user-images.githubusercontent.com/1680273/188407235-ead43d61-2ef8-416a-926f-396d8b824b33.png)](https://github.com/jaywcjlove/wxmp/releases)
 
+## 二次开发内容
+
+为了方便部署，将静态文件保存在项目的static下
+
 ## 功能特性
 
 开发计划和一些功能介绍，有需求可以在 issue 中提，使得工具变得更加完善。下面示例用于 web 应用中效果展示。
