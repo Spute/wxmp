@@ -2,15 +2,25 @@
   <h1 align="center">微信公众号 Markdown 编辑器</h1>
 </div>
 
-[![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-048754?logo=buymeacoffee)](https://jaywcjlove.github.io/#/sponsor)
-[![CI](https://github.com/jaywcjlove/wxmp/actions/workflows/ci.yml/badge.svg)](https://github.com/jaywcjlove/wxmp/actions/workflows/ci.yml)
-
-[![微信公众号 Markdown 编辑器](https://user-images.githubusercontent.com/1680273/188264183-a6b8cb6a-92e1-4a73-afc5-4f0234b26ed3.png)](https://jaywcjlove.github.io/wxmp)
-
 微信公众号文章 Markdown 在线编辑器，使用 markdown 语法创建一篇简介美观大方的微信公众号图文。由于发版本麻烦，和一些功能无法扩展停滞开发了，未来不再开发 Chrome 的插件(暂存在 chrome 分支)，通过 web 版本定制更丰富的功能。
 
-[![Markdown 编辑器桌面应用](https://user-images.githubusercontent.com/1680273/188407235-ead43d61-2ef8-416a-926f-396d8b824b33.png)](https://github.com/jaywcjlove/wxmp/releases)
+## 项目结构
 
+```
+├── electron/app 桌面应用 
+├── electron/main 主进程
+├── electron/preload 预加载
+├── website 网站
+├── static 静态资源
+```
+
+electron 目录下是桌面应用的代码，website 目录下是网站的代码，static 目录下是网站的静态资源。
+
+electron 是什么？
+
+electron 是一个使用 JavaScript、HTML 和 CSS 构建跨平台桌面应用程序的框架。
+
+展开website目录，可以看到网站的代码，website/src/themes 目录下是网站的主题，website/src/store/context.tsx 目录下是网站的主题配置。
 ## 二次开发内容
 
 为了方便部署，将静态文件保存在项目的static下
@@ -183,7 +193,6 @@ sup {} /* GFM 脚注样式定义 */
 
 ## 部署
 
-[![Docker Image Version (latest by date)](https://img.shields.io/docker/v/wcjiang/wxmp?logo=docker)](https://hub.docker.com/r/wcjiang/wxmp) [![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/wcjiang/wxmp?logo=docker)](https://hub.docker.com/r/wcjiang/wxmp) [![Docker Pulls](https://img.shields.io/docker/pulls/wcjiang/wxmp?logo=docker)](https://hub.docker.com/r/wcjiang/wxmp)
 
 轻松通过 docker 部署《微信公众号 Markdown 编辑器》网站应用。
 
@@ -207,19 +216,74 @@ docker run --name wxmp -itd -p 8113:3000 ghcr.io/jaywcjlove/wxmp:latest
 http://localhost:96611/
 ```
 
-## 贡献者
+# Website 网站项目
 
-一如既往，感谢我们出色的贡献者！
+## 1. 核心目录
 
-<a href="https://github.com/jaywcjlove/wxmp/graphs/contributors">
-  <img src="https://jaywcjlove.github.io/wxmp/CONTRIBUTORS.svg" />
-</a>
+```
+website/
+├── src/                # 源代码目录
+│   ├── assets/        # 静态资源(SVG图标等)
+│   ├── commands/      # 编辑器命令相关组件
+│   ├── components/    # 通用组件
+│   ├── pages/         # 页面组件
+│   ├── store/         # 状态管理
+│   ├── utils/         # 工具函数
+│   ├── App.tsx        # 应用入口组件
+│   └── index.tsx      # 应用入口文件
+├── public/            # 静态公共资源
+└── build/             # 构建输出目录
+```
 
-上图贡献者列表，由 [action-contributors](https://github.com/jaywcjlove/github-action-contributors)[^4] 自动生成贡献者图片。
+## 2. 主要功能模块
 
+### 页面组件 (pages/)
+- `home/` - 主页面，包含编辑器和预览
+- `theme/` - 主题编辑页面
+- `docs/` - 文档页面
 
-[^4]: Action Contributors https://github.com/jaywcjlove/github-action-contributors
+### 命令组件 (commands/)
+- `color.tsx` - 颜色选择器命令
+- `copy.tsx` - 复制功能命令
+- `css.tsx` - CSS相关命令
+- `theme.tsx` - 主题切换命令
+- `title.tsx` - 标题相关命令
 
-## License
+### 状态管理 (store/)
+- `context.tsx` - Context定义
+- `Provider.tsx` - Context Provider组件
+- `getMdSource.ts` - Markdown源码获取
 
-根据 MIT 许可证获得许可。
+## 3. 配置文件
+
+- `.kktrc.ts` - KKT构建工具配置
+- `package.json` - 项目依赖配置
+- `Dockerfile` - Docker构建配置
+- `.dockerignore` - Docker忽略文件配置
+
+## 4. 技术特点
+
+1. **构建工具**
+- 使用 KKT 作为构建工具
+- 支持 Less 模块化
+- 支持 Markdown 预览
+
+2. **样式方案**
+- 使用 styled-components 进行样式管理
+- 支持主题切换功能
+
+3. **路由管理**
+- 使用 React Router 进行路由管理
+- 支持 Hash 路由模式
+
+4. **状态管理**
+- 使用 React Context 进行状态管理
+- 支持 URL 参数同步
+
+5. **编辑器功能**
+- 基于 @uiw/react-markdown-editor
+- 支持实时预览
+- 支持主题定制
+- 支持代码高亮
+
+这是一个典型的 React 单页应用结构，采用了模块化的组织方式，便于维护和扩展。
